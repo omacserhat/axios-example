@@ -1,4 +1,5 @@
 # axios-example
+Axios ile veri çekme örnek projesidir.
 
 ## Project setup
 ```
