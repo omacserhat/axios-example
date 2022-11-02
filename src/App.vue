@@ -1,26 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container py-5">
+    <h1 class="text-center">Axios Kullanımı</h1>
+    <div class="row">
+      <div class="col-md-6-offset-md-3">
+        <div class="card">
+          <div class="card-header">
+            Listeler
+          </div>
+          <div class="card-body" style="overflow:auto;height:500px;">
+            <ul v-if="todoIsLoading==false" class="list-group">
+             <li v-for="(todo,index) in todos" :key="index" class="list-group-item">
+                {{todo.title}}
+             </li>
+            </ul>
+            <h5 v-else>Yükleniyor..</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import axios from 'axios';
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data(){
+    return{
+      url:"https://jsonplaceholder.typicode.com/todos",
+      todos:[],
+      todoIsLoading : true
+    };
+  },
+  //Created sayfa yenilendiğinde çalışır. Değer atamaları yapabiliyoruz sayfa render edildiğinde.
+  created(){
+  axios.get(this.url)
+  .then(response => this.todos = response.data)
+  .finally(() => this.todoIsLoading=false);
   }
-}
+  }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
